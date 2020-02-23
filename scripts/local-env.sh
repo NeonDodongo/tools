@@ -9,7 +9,7 @@ DOCKER_IP=localhost
 UNAME=$(uname)
 
 # Determine OS and docker IP
-if [[ "$UNAME" == CYGWIN* || "$UNAME" == MINGW* ]]; then
+if [[ ${UNAME} == CYGWIN* || ${UNAME} == MINGW* ]]; then
     echo "Running on Windows OS...changing DOCKER_IP var"
     DOCKER_IP=$(docker-machine ip)
 fi
