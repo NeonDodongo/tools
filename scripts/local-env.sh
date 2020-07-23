@@ -28,7 +28,7 @@ echo "Removing possible running containers..."
 for i in "${IMAGES[@]}"; do
     echo ${i}...
     if ! docker rm -f $(docker ps -q --filter ancestor=${i}) &> /dev/null; then
-        echo "...no ancenstor found for '${i}'"
+        echo "...no ancestor found for '${i}'"
     fi
 done
 
@@ -46,7 +46,7 @@ done
 start_mongo_container() {
     image=$1
     echo ${i}...
-    if ! docker run -d -p 27017:27017 ${image} &>/dev/null; then
+    if ! docker run -d -p 27017:27017 ${image}; then
         echo "...failed to start container for image ${image}"
         return
     fi
@@ -56,7 +56,7 @@ start_mongo_container() {
 start_minio_container() {
     image=$1
     echo ${i}...
-    if ! docker run -e "MINIO_ACCESS_KEY=TEST-USER" -e "MINIO_SECRET_KEY=TEST-USER" -d -p 9000:9000 ${image} server start &>/dev/null; then
+    if ! docker run -e "MINIO_ACCESS_KEY=TEST-USER" -e "MINIO_SECRET_KEY=TEST-USER" -d -p 9000:9000 ${image} server start; then
         echo "...failed to start container for image ${image}"
         return
     fi
@@ -80,7 +80,7 @@ done
 # Clean up dangling artifacts
 echo ""
 echo "Cleaning up dangling artifacts..."
-echo "y" | docker system prune
+echo "y" | docker image prune
 
 echo "************************************************************************"
 echo "Docker containers can be accessed via ${DOCKER_IP}:<port_of_container>"
