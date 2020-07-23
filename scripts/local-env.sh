@@ -15,8 +15,7 @@ DOCKER_IP=$(docker-machine ip ${DOCKER_MACHINE})
 # Check if Docker is available
 echo ""
 echo "Checking docker version..."
-docker --version
-if [ $? != 0 ]; then
+if ! docker --version; then
     echo "...docker not found on system...aborting"
     exit 1
 fi
